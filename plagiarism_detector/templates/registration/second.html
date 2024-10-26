@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+<body>
+    <h1>this is the second page</h1>
+    <h1>Welcome to your profile</h1>
+    <p>Username:{{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <!-- Add more profile information as needed -->
+    
+    <form action="{%url 'logout' %}" method="post">
+
+       
+        
+        {% csrf_token %}
+        <button type="submit">logout</button>
+    </form>
+
+
+
+   
+    </form>
+</body>
+</html>

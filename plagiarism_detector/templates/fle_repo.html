@@ -1,0 +1,57 @@
+   {% extends 'base.html' %}
+
+   {% block content %}
+   <!-- Main content -->
+   <div class="container" id="main">
+    <div class="row justify-content-center">
+        <!-- <div class="col-md-6">
+            <div class="custom-box">
+                <h3>Check Plagiarism</h3>
+                <a href="/Check_page/">
+                <button class="btn btn-primary">Check Now</button>
+              </a>
+            </div>
+        </div> -->
+
+        <h1>File Reposiitory</h1>
+
+        <div class="col-md-12">
+            <div class="custom-box">
+                <table class="table table-striped">
+                    <thead class="thead">
+                        <tr>
+                            <th scope="col">Status</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">File Name</th>
+                            <th scope="col">Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                            <tr>
+                                
+                                <td>{{ file.status|capfirst }}</td>
+                                <td>{{ file.catagory }}</td>
+                                <td>{{ file.file_name.name|slice:"10:"  }}</td>
+                                <td>
+                                    <a  class="btn btn-info"  href="{% url 'check_plagiarism' file.id %}" >
+                                        Check Plagiarism
+                                        <span class="badge">
+                                            <i class="glyphicon glyphicon-download" style="font-size: 20px; color: black;"></i>
+                                        </span>
+                                    </a>
+                                    
+                                    <!-- href="{{ file.file_name.url }}" download -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}

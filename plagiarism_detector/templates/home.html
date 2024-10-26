@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Main content -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upload a File and Check Plagiarism</h5>
+                        <form  id="myForm" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="fileInput" name="file">
+                                <label class="custom-file-label" for="fileInput">Choose file</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

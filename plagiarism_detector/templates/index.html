@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Main content -->
+    <div class="container" id="main">
+      <div class="row justify-content-center">
+          <div class="col-md-6">
+              <div class="custom-box">
+                  <h3>Login as User</h3>
+                  <a href="/user/">
+                  <button class="btn btn-primary">Log in</button>
+                </a>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="custom-box">
+                  <h3>Login as Coordinator</h3>
+                  <a href="/coordinator/">
+                    <button class="btn btn-primary">Log in</button>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+    <!-- Footer with social media links and copyright -->
+    
+{% endblock %}

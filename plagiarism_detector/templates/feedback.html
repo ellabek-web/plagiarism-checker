@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4">Feedback</h1>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {% if field.name == 'comment' %}
+                    <textarea class="form-control" rows="3" name="{{ field.name }}">{{ field.value|default:'' }}</textarea>
+                    {% else %}
+                    <input class="form-control" type="{{ field.field.widget.input_type }}" name="{{ field.name }}" value="{{ field.value|default:'' }}">
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if success_message %}
+<div id="success-message-overlay">
+    <div id="success-message" class="bg-white p-4 rounded shadow">{{ success_message }}</div>
+</div>
+
+<style>
+    #success-message-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            var successMessageOverlay = document.getElementById('success-message-overlay');
+            if (successMessageOverlay) {
+                successMessageOverlay.style.display = 'none';
+            }
+        }, 500);  // Hide the success message after 5 seconds
+    });
+</script>
+{% endif %}
+
+{% endblock %}

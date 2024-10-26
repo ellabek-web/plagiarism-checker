@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="main">
+{% if request.user.is_staff %}
+<div class="notifications">
+    <h3>Notifications</h3>
+    {% if notifications %}
+        
+        <table class="table table-striped">
+            <thead class="thead text-center">
+                <tr>
+                    <th scope="col">Message</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notification in notifications %}
+                <tr>
+                    <td>
+                        <p>{{ notification.message }}</p>
+                    </td>
+                    <td>
+                        <p>{{ notification.created_at }}</p>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{% url 'mark_as_read' notification.id %}">Mark as read</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       
+</div>
+    {% endif %}
+
+{% endif %}
+</div>
+  {% endblock %}

@@ -1,0 +1,167 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Main content -->
+    <div class="container" id="main">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title" style="text-align: center;">Upload a File To Repository</h1>
+                        <form  id="myForm" method="post" enctype="multipart/form-data" class="my-heigt">
+                          {% csrf_token %}
+                          
+                          <label for="collegeSelect">Choose college:</label>
+                          <select id="collegeSelect" name="college">
+                              <option value="Agriculture and Environmental Sciences">College of Agriculture and Environmental Sciences</option>
+                              <option value="Business and Economics">College of Business and Economics</option>
+                              <option value="Computing and Informatics">College of Computing and Informatics</option>
+                              <option value="Education and Behavioural Sciences">College of Education and Behavioural Sciences</option>
+                              <option value="Health and Medical Science">College of Health and Medical Science</option>
+                              <option value="Law">College of Law</option>
+                              <option value="Natural and Computational Science">College of Natural and Computational Science</option>
+                              <option value="Social Sciences and Humanities">College of Social Sciences and Humanities</option>
+                              <option value="Veterinary Medicine">College of Veterinary Medicine</option>
+                          </select>
+                          <br>    
+                            
+
+                          <label for="departmentInput" >Enter department:</label>
+                          <input type="text" id="departmentInput" name="department">
+                          
+                          <br>    
+  
+                          <label for="authorInput">Enter Athor:</label>
+                          <input type="text" id="authorInput" name="author">
+                           
+                          <br> 
+                          <label for="Degree">Degree level</label>    
+                          <select name="Degree"  id="Degree">
+                           <option value="Undergraduate">Undergraduate</option>
+                           <option value="Postgraduate">Postgraduate</option>
+                           <option value="Phd">Phd</option>
+                          </select>
+                          <br>
+                             
+                          <label for="Category">Catagory</label>                        
+                                <select name="Catagory"  id="Catagory">
+                                 <option value="Research">Research</option>
+                                 <option value="Project Document">Project Document</option>
+                                 <option value="Proposal">Proposal</option>
+                                </select>
+                         
+                         <br>    
+                           <div class="custom-file">                
+                                <input type="file" class="custom-file-input" id="fileInput" name="file_name">
+                                <label class="custom-file-label" for="fileInput">Choose file</label>
+                            </div>
+                            <button type="submit" class="btn btn-info mt-3">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if success_message %}
+<div id="success-message-overlay">
+    <div id="success-message" class="bg-white p-4 rounded shadow">{{ success_message }}</div>
+</div>
+
+<style>
+    #success-message-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+</style>
+
+<script>
+    const form = document.getElementById('myForm'); 
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  const collegeSelect = document.getElementById('collegeSelect');
+  const departmentInput = document.getElementById('departmentInput');
+  const authorInput = document.getElementById('authorInput');
+  const degreeSelect = document.getElementById('Degree');
+  const categorySelect = document.getElementById('Catagory');
+  const fileInput = document.getElementById('fileInput');
+
+  let isValid = true;
+
+  if (collegeSelect.value === '') {
+    isValid = false;
+    collegeSelect.classList.add('is-invalid');
+  } else {
+    collegeSelect.classList.remove('is-invalid');
+  }
+
+  if (departmentInput.value.trim() === '') {
+    isValid = false;
+    departmentInput.classList.add('is-invalid');
+  } else {
+    departmentInput.classList.remove('is-invalid');
+  }
+
+  if (authorInput.value.trim() === '') {
+    isValid = false;
+    authorInput.classList.add('is-invalid');
+  } else {
+    authorInput.classList.remove('is-invalid');
+  }
+
+  if (degreeSelect.value === '') {
+    isValid = false;
+    degreeSelect.classList.add('is-invalid');
+  } else {
+    degreeSelect.classList.remove('is-invalid');
+  }
+
+  if (categorySelect.value === '') {
+    isValid = false;
+    categorySelect.classList.add('is-invalid');
+  } else {
+    categorySelect.classList.remove('is-invalid');
+  }
+
+  if (fileInput.value === '') {
+    isValid = false;
+    fileInput.classList.add('is-invalid');
+  } else {
+    fileInput.classList.remove('is-invalid');
+  }
+
+  if (isValid) {
+    form.submit(); // Submit the form if all fields are valid
+  }
+});
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            var successMessageOverlay = document.getElementById('success-message-overlay');
+            if (successMessageOverlay) {
+                successMessageOverlay.style.display = 'none';
+            }
+        }, 1000);  // Hide the success message after 5 seconds
+    });
+
+
+
+    // Get the form element
+
+</script>
+{% endif %}
+
+{% endblock %}

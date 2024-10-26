@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Document Repository</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+       
+
+        label {
+    font-weight: bold;
+     }
+         .my-heigt {
+        line-height: 2; /* Adjust the value as needed */
+       }
+        /* Custom styles for the header and footer */
+        #success-message-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure full viewport height */
+        }
+       .content {
+        flex-grow: 1; /* Fill remaining space */
+        }
+        .file_name {
+            word-wrap: break-word;
+        }
+        .navbar {
+            background-color:#6351ce;
+        }
+        .navbar a {
+            color: #fff;
+        }
+        .custom-box {
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        #main {
+            margin-top: 60px;
+            /* margin-bottom: 100px; */
+            padding-bottom: 20px;
+        }
+        #my_lists{
+          border-collapse: collapse;
+         /* opacity: 0.9; */
+          border-radius: 40px;  /* Adjust value for desired curve */
+  
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            text-align: center;
+            flex-basis: 100px;
+            /* position: fixed; Change position to relative */
+            bottom: 0;
+            width: 100%;
+            z-index: 999;
+        }.custom-box table td {
+            padding: 10px 5px;  /* Adjust values for top/bottom and left/right padding */
+
+            line-height: 1;  /* Adjust value for desired spacing */
+            /* border-right-style: solid;
+            border-right-width: 2px;
+            border-right-color: #333333; */
+        } 
+      .custom-box table th {
+            padding: 10px 5px;  /* Adjust values for top/bottom and left/right padding */
+            /* line-height: 1.5;  Adjust value for desired spacing */
+            /* border-right-style: solid;
+            border-right-width: 2px;
+            border-right-color: #333333; */
+        }
+        /* .custom-box table tr {
+            /*padding: 10px 5px;   Adjust values for top/bottom and left/right padding */
+            /* line-height: 1.5;  Adjust value for desired spacing */
+            /* border-bottom-style: solid;
+            border-bottom-width: 2px;
+            border-bottom-color: #333333; 
+        } */
+        .custom-box table {
+  /* Border styles go here */
+         margin: auto;
+         /* border-style: solid; 
+         border-width: 2px;
+         border-color: #333333; */
+         border-collapse: collapse;
+         /* opacity: 0.9; */
+         border-radius: 5px;  /* Adjust value for desired curve */
+
+         }
+
+        .center-div {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .custom-list {
+            max-height: 300px; /* Set maximum height for scrollability */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin: 0 auto; /* Center the list horizontally */
+            text-align: center; /* Center the list content */
+            padding-left: 80px; /* Add left padding */
+            padding-right: 80px; /* Add right padding */
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #337ab7;
+            margin-bottom: 20px;
+        }
+        p {
+            /* padding: 20px 0; */
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+        /* Additional styles for the footer */
+        .footer p {
+            font-size: 14px;
+            color: #777;
+        }
+        .footer a {
+            margin: 0 10px;
+        }
+        .carousel-item img {
+            max-height: 500px;
+            object-fit: cover;
+        }
+        /* Resize the carousel */
+        #myCarousel {
+            max-width: 100%; /* Adjust as needed */
+            margin: 0 auto; /* Center horizontally */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation links -->
+<div class="content">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">HUDRPDS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/coordinator/">Home</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/">Home</a>
+                    </li>
+                    {% endif %}
+
+
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/coordinator/">Home</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact/">Contact</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">{{ user.username }}</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <form action="{%url 'logout' %}" method="post">
+
+       
+        
+                            {% csrf_token %}
+                            <!-- logout -->
+                            <!-- <button type="button" class="btn btn-outline-info "> logout </button> -->
+                            <!-- <button class="nav-button" type="submit">logout</button> -->
+                        
+                            <button type="submit" class="btn btn-primary">logout</button>
+                        </form>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #6351ce; color:#fff">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a  href="/accounts/password_reset/"  class="btn  " style="background-color: #6351ce; color:#fff">Change password</a>
+                      
+                           
+                        </div>
+                    </li>
+                        {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notification_view/"  aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge badge-danger badge-pill">{{notfication}}</span>
+                        </a>
+                       
+                    </li>
+                    {% endif %}
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+
+
+
+
+
+
+
+
+
+    <!-- Main content -->
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+    <!-- Footer with social media links and copyright -->
+
+
+
+
+<!-- Remove the container if you want to extend the Footer to full width. -->
+
+
+  <!-- Footer -->
+  <footer
+          class="text-center text-lg-start text-white"
+          style="background-color: #1c2331"
+          >
+    <!-- Section: Social media -->
+    <section
+             class="d-flex justify-content-between p-4"
+             style="background-color: #6351ce"
+             >
+      <!-- Left -->
+      <div class="me-5" >
+        <span style="text-align: center;">Haramaya University Research and Project Documents Repository and Plagiarism Detector System</span>
+      </div>
+      <!-- Left -->
+
+      <!-- Right -->
+      <div>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="" class="text-white me-4">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold">Haramaya University</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p>
+              Building the Basis for Development
+            </p>
+          </div>
+          <!-- Grid column -->
+
+
+
+          
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Products</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p>
+              <a href="#!" class="text-white">Researchs</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Proposals</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Documents</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Projects</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Useful links</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+
+                 
+
+
+
+
+
+            <p>
+              <a href="https://www.haramaya.edu.et/community/" class="text-white">Student Service</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Campus Security</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Health and Clinic</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Maintenance</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Contact</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p><i class="fas fa-home mr-3"></i> Ethiopia, Haramaya</p>
+            <p><i class="fas fa-envelope mr-3"></i>community@haramaya.edu.et</p>
+            <p><i class="fas fa-phone mr-3"></i> +25155134234</p>
+            <p><i class="fas fa-print mr-3"></i> P.o.Box: 138</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div
+         class="text-center p-3"
+         style="background-color: rgba(0, 0, 0, 0.2)"
+         >
+         Copyright © 2023 HU. All Rights Reserved
+        
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+
+<!-- End of .container -->
+
+
+
+    
+|<!--footer class="footer">
+        <div class="container">
+            <p>This system allows researchers and students at Haramaya University to upload, store, and share their research and project documents. It also integrates a plagiarism detection tool to ensure the originality of uploaded content.</p>
+            <p>© 2024 Research Repository. All rights reserved.</p>
+           Social media icons (replace with actual links) 
+            <a href="#" class="primary">
+                <i class="bi bi-facebook"></i> Facebook
+            </a>
+            <a href="#" class="info">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+            
+        </div>
+    </footer> -->
+</body>
+
+
+
+
+
+
+
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+     $(document).ready(function () {
+            $('#myCarousel').carousel({
+                interval: 4000 // Change slide every 3 seconds
+            });
+        });
+        // Update the label when a file is selected
+        $('#fileInput').on('change', function() {
+            var fileName = $(this).val().split('\\').pop(); // Get the file name
+            $(this).next('.custom-file-label').html(fileName); // Update the label
+        });
+
+/////////////
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+        var fileInput = document.getElementById("fileInput");
+        if (fileInput.files.length === 0) {
+            event.preventDefault(); // Prevent form submission
+            alert("Please select a file");
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            var successMessageOverlay = document.getElementById('success-message-overlay');
+            if (successMessageOverlay) {
+                successMessageOverlay.style.display = 'none';
+            }
+        }, 500);  // Hide the success message after 5 seconds
+    });
+    </script>
+</html>
